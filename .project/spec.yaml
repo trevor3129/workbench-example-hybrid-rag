@@ -88,7 +88,7 @@ execution:
     stop_command: jupyter lab stop 8888
     user_msg: ""
     logfile_path: ""
-    timeout_seconds: 0
+    timeout_seconds: 60
     icon_url: ""
     webapp_options:
       autolaunch: true
@@ -97,10 +97,22 @@ execution:
         trim_prefix: false
       url_command: jupyter lab list 2>&1 | head -n 2 | tail -n 1 | cut -f1 -d' ' |
         grep -v 'Currently'
+  - name: Visual Studio Code
+    type: vs-code
+    class: native
+    start_command: ""
+    health_check_command: '[ \$(ps aux | grep ".vscode-server" | grep -v grep | wc
+      -l ) -gt 4 ] && [ \$(ps aux | grep "/.vscode-server/bin/.*/node .* net.createConnection"
+      | grep -v grep | wc -l) -gt 0 ]'
+    stop_command: ""
+    user_msg: ""
+    logfile_path: ""
+    timeout_seconds: 120
+    icon_url: ""
   resources:
     gpu:
       requested: 1
-    sharedMemoryMB: 4096
+    sharedMemoryMB: 5200
   secrets:
   - variable: NVCF_RUN_KEY
     description: NVCF Run Key for Cloud Inference
